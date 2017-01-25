@@ -1,21 +1,34 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {getAccounts} from './reducers/accountReducer';
+import {connect} from 'react-redux';
+import Account from './components/Account';
 
 class App extends Component {
+  componentWillMount() {
+    this.props.getAccounts();
+  }
+
   render() {
+    const {accounts} = this.props;
+    console.log(accounts);
+
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+        <div className="App-accountList">
+          {accounts && accounts.map(account => (
+            <Account account={account}/>
+          ))}
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
       </div>
     );
   }
 }
 
-export default App;
+export default connect(
+  state => ({
+    accounts: state.account.accounts,
+  }), {
+    getAccounts,
+  }
+)(App);

@@ -1,10 +1,18 @@
-const CREATE_ACCOUNT = 'banking-webapp/account/CREATE_ACCOUNT';
+import axios from 'axios';
 
-export function createAccount(name, initialBalance) {
-  return {
-    type: CREATE_ACCOUNT,
-    name,
-    initialBalance,
+const GET_ACCOUNTS = 'banking-webapp/account/GET_ACCOUNTS';
+// const CREATE_ACCOUNT = 'banking-webapp/account/CREATE_ACCOUNT';
+// const MAKE_TRANSACTION = 'banking-webapp/account/MAKE_TRANSACTION';
+
+export function getAccounts() {
+  return dispatch => {
+    axios.get('http://localhost:3001/api/accounts')
+      .then(response => {
+        dispatch({
+          type: GET_ACCOUNTS,
+          accounts: response.data,
+        })
+      })
   };
 }
 
@@ -12,12 +20,11 @@ const initialState = {};
 
 export default function accountReducer(state = initialState, action = {}) {
   switch (action.type) {
-    case CREATE_ACCOUNT:
+    case GET_ACCOUNTS:
       return {
         ...state,
-
+        accounts: action.accounts,
       };
-
     default:
       return state;
   }
