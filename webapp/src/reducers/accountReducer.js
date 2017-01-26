@@ -1,8 +1,7 @@
 import axios from 'axios';
 
 const GET_ACCOUNTS = 'banking-webapp/account/GET_ACCOUNTS';
-// const CREATE_ACCOUNT = 'banking-webapp/account/CREATE_ACCOUNT';
-// const MAKE_TRANSACTION = 'banking-webapp/account/MAKE_TRANSACTION';
+const MAKE_TRANSACTION = 'banking-webapp/account/MAKE_TRANSACTION';
 
 export function getAccounts() {
   return dispatch => {

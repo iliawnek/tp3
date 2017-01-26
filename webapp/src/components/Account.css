@@ -2,7 +2,21 @@
     background-color: #DDD;
     padding: 20px;
     margin: 10px;
-    width: 300px;
+    width: 400px;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: 0.25s ease-in-out;
+}
+
+.Account:hover {
+    transform: scale(1.05);
+}
+
+.Account-selected {
+    font-weight: bold;
+    background-color: #BBB;
+    transform: scale(1.05);
+    cursor: not-allowed;
 }
 
 .Account-content {
