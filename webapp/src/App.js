@@ -29,9 +29,11 @@ class App extends Component {
   handleSend = () => {
     const {amount} = this.state;
     const {fromAccount, toAccount} = this.props;
-    this.makeTransaction(fromAccount, toAccount, amount);
-    this.props.reset();
-    this.setState({amount: null});
+    if (fromAccount.balance >= amount) {
+      this.makeTransaction(fromAccount, toAccount, amount);
+      this.props.reset();
+      this.setState({amount: null});
+    }
   };
 
   getMessage = () => {
