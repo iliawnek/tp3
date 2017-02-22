@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import './App.css';
-import {reset} from './reducers/appReducer';
-import {getAccounts, getAccount} from './reducers/accountReducer';
+import {reset} from '../reducers/appReducer';
+import {getAccounts, getAccount} from '../reducers/accountReducer';
 import {connect} from 'react-redux';
-import AccountList from './components/AccountList';
+import AccountList from '../components/AccountList';
 import axios from 'axios';
 
 class App extends Component {

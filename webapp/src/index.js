@@ -1,11 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import App from './pages/App';
 import './index.css';
+import {browserHistory} from 'react-router';
+import Routes from './routes';
+
 import {Provider} from 'react-redux';
 import rootReducer from './reducers';
 import {createStore, applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
+
 
 const store = createStore(
   rootReducer,
@@ -17,7 +21,7 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <App/>
+    <Routes history={browserHistory}/>
   </Provider>,
   document.getElementById('root')
 );
