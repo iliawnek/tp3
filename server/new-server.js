@@ -33,6 +33,19 @@ router.route('/accounts')
 ;
 
 router.route('/transactions')
+  .get(function (request, response) {
+    var client = connect(9999, '0.0.0.0');
+    write(client, 'DATA GET', {
+      account: parseInt(request.query.account),
+      start_date: parseInt(request.query.start_date),
+      end_date: parseInt(request.query.end_date),
+    });
+    client.on('data', function (data) {
+      response.json({data});
+      client.destroy();
+    })
+  })
+
   .post(function (request, response) {
     var client = connect(3032);
     write(client, 'DATA POST', {
@@ -48,15 +61,16 @@ router.route('/transactions')
 ;
 
 // Initialise socket connection.
-function connect(port) {
+function connect(port, host) {
   var client = new net.Socket();
   client.setEncoding('utf8');
-  client.connect(port);
+  client.connect(port, host || '127.0.0.1');
   return client;
 }
 
 // Write to socket.
 function write(client, command, params) {
+  console.log(JSON.stringify(params));
   client.write(command + ' ' + JSON.stringify(params) + '\n');
 }
 
