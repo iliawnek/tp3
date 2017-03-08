@@ -8,7 +8,7 @@ var net = require('net');
 var ACCOUNTS_SERVICE_PORT = 3031;
 var REPLAY_SERVICE_PORT = 9999;
 var REPLAY_SERVICE_HOST = '0.0.0.0';
-CREATE_TRANSACTION_SERVICE_PORT = 3032;
+var CREATE_TRANSACTION_SERVICE_PORT = 3032;
 
 // /accounts
 router.route('/accounts')
