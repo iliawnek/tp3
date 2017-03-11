@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import './Account.css';
+import TransactionList from '../components/TransactionList';
 import {Line} from 'react-chartjs-2';
 import _ from 'lodash';
 
@@ -49,7 +50,16 @@ export default class Account extends Component {
       };
     });
 
-    transactions.unshift({x: 1479243060000, y: data.starting_balance, type: 'start'});
+    const startingTransaction = {
+      x: 1479243060000,
+      y: data.starting_balance,
+      type: 'start',
+      amount: data.starting_balance,
+      name: 'You',
+      message: 'Initial balance when the account was created.'
+    };
+
+    transactions.unshift(startingTransaction);
     return transactions;
   };
 
@@ -73,18 +83,21 @@ export default class Account extends Component {
       balance_in: this.randomBalanceIn(),
     };
 
-    const processedData = this.processData(sampleData);
+    const transactions = this.processData(sampleData);
 
     const data = {
       datasets: [{
-        data: processedData,
-        pointBackgroundColor: this.getBackgroundColors(processedData),
+        data: transactions,
+        pointBackgroundColor: this.getBackgroundColors(transactions),
       }],
     };
 
     console.debug(data.datasets[0].data);
 
     const options = {
+      onClick: (event, point) => {
+        console.debug(point);
+      },
       scales: {
         xAxes: [{
           type: 'time',
@@ -116,7 +129,7 @@ export default class Account extends Component {
         callbacks: {
           afterBody: item => {
             const {index} = item[0];
-            const transaction = processedData[index];
+            const transaction = transactions[index];
             const {y, type, amount, name, message} = transaction;
 
             const now = `£${y}`;
@@ -137,7 +150,8 @@ export default class Account extends Component {
             message && text.splice(2, 0, `"${message}" — ${type === 'in' ? name : 'me'}`,);
             return text;
           },
-          label: () => {},
+          label: () => {
+          },
         }
       },
       legend: {
@@ -146,10 +160,13 @@ export default class Account extends Component {
     };
 
     return (
-      <Line
-        data={data}
-        options={options}
-      />
+      <div className="AccountPage">
+        <Line
+          data={data}
+          options={options}
+        />
+        <TransactionList transactions={transactions}/>
+      </div>
     )
   }
 }
