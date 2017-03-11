@@ -16,7 +16,7 @@ export default class Account extends Component {
   randomBalanceOut = () => {
     let balanceOut = [];
     for (let i = 0; i < Math.random() * 10; i++) {
-      balanceOut.push([Math.floor(Math.random() * 10), "Jeff", -Math.ceil(Math.random() * 100), this.randomDate()]);
+      balanceOut.push([Math.floor(Math.random() * 10), "Jeff", -Math.ceil(Math.random() * 100), this.randomDate(), 'This is for that thing that you did for me.']);
     }
     return balanceOut;
   };
@@ -24,7 +24,7 @@ export default class Account extends Component {
   randomBalanceIn = () => {
     let balanceIn = [];
     for (let i = 0; i < Math.random() * 10 + 10; i++) {
-      balanceIn.push([Math.floor(Math.random() * 10), "Jeff", Math.ceil(Math.random() * 200), this.randomDate()]);
+      balanceIn.push([Math.floor(Math.random() * 10), "Jeff", Math.ceil(Math.random() * 200), this.randomDate(), 'This is for that thing that I did for you.']);
     }
     return balanceIn;
   };
@@ -42,6 +42,10 @@ export default class Account extends Component {
         x: t[3],
         y: currentBalance,
         type: amount < 0 ? 'out' : 'in',
+        id: t[0],
+        name: t[1],
+        amount,
+        message: t.length === 5 && t[4],
       };
     });
 
@@ -75,7 +79,6 @@ export default class Account extends Component {
 
     const data = {
       datasets: [{
-        label: 'balance',
         data: processedData,
         pointBackgroundColor: this.getBackgroundColors(processedData),
       }],
@@ -88,6 +91,9 @@ export default class Account extends Component {
         xAxes: [{
           type: 'time',
           position: 'bottom',
+          time: {
+            tooltipFormat: 'DD/MM/YYYY HH:mm'
+          }
         }]
       },
       elements: {
@@ -98,6 +104,28 @@ export default class Account extends Component {
           hitRadius: 8,
           radius: 4,
           hoverRadius: 8,
+        }
+      },
+      tooltips: {
+        callbacks: {
+          afterBody: item => {
+            const {index} = item[0];
+            const transaction = processedData[index];
+            const {y, type, amount, name, message} = transaction;
+            const before = `£${y - amount}`;
+            const now = `£${y}`;
+            const sign = amount < 0 ? '-' : '+';
+            const amountText = `£${Math.abs(amount)}`;
+            const text = [
+              '',
+              `${type === 'in' ? 'Received' : 'Sent'} ${amountText} ${type === 'in' ? 'from' : 'to'} ${name}.`,
+              '',
+              `Balance is now ${before} ${sign} ${amountText} = ${now}.`,
+            ];
+            message && text.splice(2, 0, `"${message}" — ${type === 'in' ? name : 'me'}`,);
+            return text;
+          },
+          label: () => {},
         }
       },
     };
