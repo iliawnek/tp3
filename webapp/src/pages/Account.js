@@ -75,7 +75,7 @@ export default class Account extends Component {
       },
       elements: {
         line: {
-          tension: 0,
+          stepped: true,
         },
       },
     };
