@@ -55,12 +55,10 @@ export default class Account extends Component {
 
   getBackgroundColors = (data) => {
     return data.map((t) => {
-      if (t.type === 'in') {
-        return '#28cc1a'; // green
-      } else if (t.type === 'out') {
+      if (t.type === 'out') {
         return 'red';
       } else {
-        return '#bbb';
+        return '#28cc1a'; // green
       }
     });
   };
@@ -120,8 +118,14 @@ export default class Account extends Component {
             const {index} = item[0];
             const transaction = processedData[index];
             const {y, type, amount, name, message} = transaction;
-            const before = `£${y - amount}`;
+
             const now = `£${y}`;
+
+            if (type === 'start') {
+              return `Starting balance is ${now}.`;
+            }
+
+            const before = `£${y - amount}`;
             const sign = amount < 0 ? '-' : '+';
             const amountText = `£${Math.abs(amount)}`;
             const text = [
