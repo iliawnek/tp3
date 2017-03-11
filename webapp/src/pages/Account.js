@@ -3,6 +3,7 @@ import './Account.css';
 import TransactionList from '../components/TransactionList';
 import {Line} from 'react-chartjs-2';
 import _ from 'lodash';
+import {scroller} from 'react-scroll';
 
 export default class Account extends Component {
 
@@ -97,6 +98,10 @@ export default class Account extends Component {
     const options = {
       onClick: (event, point) => {
         console.debug(point);
+        scroller.scrollTo(point[0]._index, {
+          duration: 500,
+          smooth: true,
+        });
       },
       scales: {
         xAxes: [{

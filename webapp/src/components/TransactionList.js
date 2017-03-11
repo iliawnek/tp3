@@ -12,10 +12,11 @@ export default class TransactionList extends Component {
 
     return (
       <div className="TransactionList">
-        {transactions.map(transaction => (
+        {transactions.map((transaction, index) => (
           <Transaction
             {...transaction}
             key={transaction.x}
+            scrollName={index}
           />
         )).reverse()}
       </div>
