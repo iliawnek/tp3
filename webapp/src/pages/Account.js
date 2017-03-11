@@ -94,6 +94,11 @@ export default class Account extends Component {
         line: {
           stepped: true,
         },
+        point: {
+          hitRadius: 8,
+          radius: 4,
+          hoverRadius: 8,
+        }
       },
     };
 
