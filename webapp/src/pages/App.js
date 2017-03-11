@@ -9,7 +9,7 @@ import axios from 'axios';
 class App extends Component {
 
   componentWillMount() {
-    this.props.getAccounts();
+    // this.props.getAccounts();
   }
 
   state = {};
