@@ -92,9 +92,17 @@ export default class Account extends Component {
           type: 'time',
           position: 'bottom',
           time: {
-            tooltipFormat: 'DD/MM/YYYY HH:mm'
+            tooltipFormat: 'DD/MM/YYYY HH:mm',
+            unit: 'month',
           }
-        }]
+        }],
+        yAxes: [{
+          type: 'linear',
+          ticks: {
+            min: 0,
+            callback: value => `£${value}`,
+          },
+        }],
       },
       elements: {
         line: {
