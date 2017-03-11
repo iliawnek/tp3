@@ -128,6 +128,9 @@ export default class Account extends Component {
           label: () => {},
         }
       },
+      legend: {
+        display: false,
+      }
     };
 
     return (
