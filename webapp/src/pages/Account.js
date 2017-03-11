@@ -36,15 +36,29 @@ export default class Account extends Component {
     transactions = _.sortBy(transactions, (t) => t[3]);
 
     transactions = transactions.map((t) => {
-      currentBalance += t[2];
+      let amount = t[2];
+      currentBalance += amount;
       return {
         x: t[3],
         y: currentBalance,
+        type: amount < 0 ? 'out' : 'in',
       };
     });
 
-    transactions.unshift({x: 1479243060000, y: data.starting_balance});
+    transactions.unshift({x: 1479243060000, y: data.starting_balance, type: 'start'});
     return transactions;
+  };
+
+  getBackgroundColors = (data) => {
+    return data.map((t) => {
+      if (t.type === 'in') {
+        return '#28cc1a'; // green
+      } else if (t.type === 'out') {
+        return 'red';
+      } else {
+        return '#bbb';
+      }
+    });
   };
 
   render() {
@@ -57,10 +71,13 @@ export default class Account extends Component {
       balance_in: this.randomBalanceIn(),
     };
 
+    const processedData = this.processData(sampleData);
+
     const data = {
       datasets: [{
         label: 'balance',
-        data: this.processData(sampleData),
+        data: processedData,
+        pointBackgroundColor: this.getBackgroundColors(processedData),
       }],
     };
 
