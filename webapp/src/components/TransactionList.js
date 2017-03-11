@@ -10,13 +10,12 @@ export default class TransactionList extends Component {
   render() {
     const {transactions} = this.props;
 
-    const styles = {};
-
     return (
       <div className="TransactionList">
         {transactions.map(transaction => (
           <Transaction
             {...transaction}
+            key={transaction.x}
           />
         )).reverse()}
       </div>

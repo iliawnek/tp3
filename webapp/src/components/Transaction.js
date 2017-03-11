@@ -8,15 +8,13 @@ export default class Transaction extends Component {
     holder: PropTypes.string,
     name: PropTypes.string,
     message: PropTypes.string,
-    before: PropTypes.number,
-    y: PropTypes.number,
     amount: PropTypes.number,
     type: PropTypes.string,
     x: PropTypes.number,
   };
 
   render() {
-    const {name, message, before, y: now, amount, type, x: date} = this.props;
+    const {name, message, amount, type, x: date} = this.props;
 
     const amountText = `${amount < 0 ? '-' : '+'}£${Math.abs(amount)}`;
 
