@@ -53,7 +53,7 @@ export default class TransactionChart extends Component {
       },
       elements: {
         line: {
-          stepped: true,
+          tension: 0,
         },
         point: {
           hitRadius: 8,
